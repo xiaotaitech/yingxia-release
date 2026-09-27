@@ -4,7 +4,7 @@
 
 ## 安装与更新
 
-**下载**：用手机浏览器打开 https://github.com/xiaotaitech/yingxia-release/releases/latest/download/yingxia.apk ，也可以让已经装好影匣的朋友在「我的 → 分享影匣」里直接把安装包发给你（不需要访问 GitHub）。要求 Android 8.0 及以上。
+**下载**：用手机浏览器打开 https://github.com/xiaotaitech/yingxia-release/releases/latest/download/yingxia.apk ；GitHub 打不开时用备用地址 https://cdn.jsdelivr.net/gh/xiaotaitech/yingxia-release@dist/yingxia.apk 。也可以让已经装好影匣的朋友在「我的 → 分享影匣」里直接把安装包发给你（不需要访问 GitHub）。要求 Android 8.0 及以上。
 
 **更新**：打开影匣时会自动提示新版本，也可以在「我的 → 检查更新」手动检查。点「下载更新」后在通知栏看进度，下载完成会自动打开安装界面，覆盖安装，数据都会保留。
 
@@ -83,5 +83,5 @@
 - **某个片播放不了**：在播放页点「换源」，或在详情页换一个来源、线路。
 - **站点变慢或失效**：在「站点管理」点「检测全部」，停用失效的站点。
 - **最近观看没有记录**：检查是否开启了无痕模式。
-- **更新下载很慢或失败**：国内访问 GitHub 可能较慢，可以连 Wi-Fi 重试，或让朋友直接分享安装包。
+- **更新下载很慢或失败**：影匣会先走备用线路（jsDelivr），失败再走 GitHub。都不行时可以连 Wi-Fi 重试，或让朋友直接分享安装包。
 - **问题反馈**：https://github.com/xiaotaitech/yingxia-release/issues
