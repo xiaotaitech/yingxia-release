@@ -1,0 +1,27 @@
+{
+  "version": "0.9.4",
+  "notes": "## 影匣 0.9.4\n\nClaude-Session: https://claude.ai/code/session_01NvtJbrXvkWLvmk66HafK8S\n\n手机下载 yingxia.apk，电视和盒子下载 yingxia-tv.apk；已安装的用户可在应用内「检查更新」直接更新。\n",
+  "page": "https://github.com/xiaotaitech/yingxia-release/releases/tag/v0.9.4",
+  "apk": [
+    "https://cdn.jsdelivr.net/gh/xiaotaitech/yingxia-release@a540339605356f183cd1c627645be93ad6f77a65/yingxia.apk",
+    "https://fastly.jsdelivr.net/gh/xiaotaitech/yingxia-release@a540339605356f183cd1c627645be93ad6f77a65/yingxia.apk",
+    "https://quantil.jsdelivr.net/gh/xiaotaitech/yingxia-release@a540339605356f183cd1c627645be93ad6f77a65/yingxia.apk",
+    "https://testingcf.jsdelivr.net/gh/xiaotaitech/yingxia-release@a540339605356f183cd1c627645be93ad6f77a65/yingxia.apk",
+    "https://gcore.jsdelivr.net/gh/xiaotaitech/yingxia-release@a540339605356f183cd1c627645be93ad6f77a65/yingxia.apk",
+    "https://github.com/xiaotaitech/yingxia-release/releases/download/v0.9.4/yingxia.apk",
+    "https://ghfast.top/https://github.com/xiaotaitech/yingxia-release/releases/download/v0.9.4/yingxia.apk",
+    "https://gh-proxy.com/https://github.com/xiaotaitech/yingxia-release/releases/download/v0.9.4/yingxia.apk"
+  ],
+  "apkTv": [
+    "https://cdn.jsdelivr.net/gh/xiaotaitech/yingxia-release@a540339605356f183cd1c627645be93ad6f77a65/yingxia-tv.apk",
+    "https://fastly.jsdelivr.net/gh/xiaotaitech/yingxia-release@a540339605356f183cd1c627645be93ad6f77a65/yingxia-tv.apk",
+    "https://quantil.jsdelivr.net/gh/xiaotaitech/yingxia-release@a540339605356f183cd1c627645be93ad6f77a65/yingxia-tv.apk",
+    "https://testingcf.jsdelivr.net/gh/xiaotaitech/yingxia-release@a540339605356f183cd1c627645be93ad6f77a65/yingxia-tv.apk",
+    "https://gcore.jsdelivr.net/gh/xiaotaitech/yingxia-release@a540339605356f183cd1c627645be93ad6f77a65/yingxia-tv.apk",
+    "https://github.com/xiaotaitech/yingxia-release/releases/download/v0.9.4/yingxia-tv.apk",
+    "https://ghfast.top/https://github.com/xiaotaitech/yingxia-release/releases/download/v0.9.4/yingxia-tv.apk",
+    "https://gh-proxy.com/https://github.com/xiaotaitech/yingxia-release/releases/download/v0.9.4/yingxia-tv.apk"
+  ],
+  "apkSha256": "9a7091ab8c7322e92f679005d850f4df2f156f76868d86502fd9a3847e8625d6",
+  "apkTvSha256": "3a0de34a9a90f62390e0ae6f598f1a8c8bb690a12949e328a83103fbcc0717af"
+}

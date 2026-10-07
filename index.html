@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>影匣下载</title>
+<style>
+  :root { --bg: #111418; --card: #1c2128; --text: #eef1f5; --sub: #a6b0bd; --accent: #3b6df0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px 18px 40px; background: var(--bg); color: var(--text);
+    font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.6; }
+  main { max-width: 520px; margin: 0 auto; }
+  h1 { font-size: 28px; margin: 0; }
+  .sub { color: var(--sub); margin: 2px 0 20px; }
+  .btn { display: block; width: 100%; margin: 12px 0; padding: 16px; border: 0; border-radius: 14px; background: var(--accent);
+    color: #fff; font-size: 20px; text-align: center; text-decoration: none; cursor: pointer; }
+  .btn small { display: block; font-size: 13px; opacity: .85; }
+  .btn.tv { background: #2f3742; }
+  .card { background: var(--card); border-radius: 14px; padding: 14px 16px; margin: 16px 0; }
+  .card h2 { font-size: 16px; margin: 0 0 6px; }
+  .card ol, .card ul { margin: 0; padding-left: 20px; color: var(--sub); }
+  details { color: var(--sub); }
+  details a { color: #8fb0ff; word-break: break-all; font-size: 13px; }
+  #notes { white-space: pre-wrap; color: var(--sub); font-size: 14px; }
+  .mask { position: fixed; inset: 0; background: rgba(0, 0, 0, .9); color: #fff; text-align: center; padding: 18vh 24px 0; font-size: 24px; z-index: 9; }
+  .mask .arrow { position: absolute; top: 8px; right: 18px; font-size: 40px; }
+  .mask small { display: block; font-size: 15px; color: #bbb; margin-top: 12px; }
+</style>
+</head>
+<body>
+<div id="mask" class="mask" hidden>
+  <div class="arrow">↗</div>
+  请点右上角 <b>···</b><br>选择「在浏览器打开」
+  <small>微信、QQ 里不能下载安装包，到浏览器里打开这个页面就能下载</small>
+</div>
+<main>
+  <h1>影匣</h1>
+  <p class="sub" id="ver">正在读取最新版本…</p>
+  <a class="btn" id="phone" href="#">下载手机版<small id="phoneInfo">正在挑选最快的下载线路…</small></a>
+  <a class="btn tv" id="tv" href="#">下载电视 / 盒子版<small id="tvInfo">正在挑选最快的下载线路…</small></a>
+  <div class="card">
+    <h2>安装</h2>
+    <ol>
+      <li>手机下载「手机版」，电视和电视盒子下载「电视 / 盒子版」。</li>
+      <li>下载完成后打开安装包；第一次安装时按提示允许"安装未知应用"。</li>
+      <li>小米、华为、OPPO、vivo 等手机安装时可能有安全提示，选"继续安装"或"仍然安装"即可。</li>
+      <li>电视上没有浏览器时：在电脑上下载电视版拷到 U 盘，插到电视上用文件管理器打开；或者用手机影匣的「分享影匣 → 面对面分享」。</li>
+    </ol>
+  </div>
+  <div class="card"><h2>更新内容</h2><div id="notes"></div></div>
+  <details><summary>下载不动？换一条线路</summary><div id="lines"></div></details>
+</main>
+<script>
+(function () {
+  var ua = navigator.userAgent;
+  // 微信、QQ 内置浏览器不能下载安装包：提示到浏览器打开
+  if (/MicroMessenger/i.test(ua) || / QQ\//i.test(ua)) document.getElementById('mask').hidden = false;
+
+  // 测速：同时请求每条线路，看谁最先有响应（no-cors 拿不到内容，但能测出连接和开始传输的快慢），4 秒没响应的放最后
+  function fastest(urls) {
+    return Promise.all(urls.map(function (u) {
+      var start = Date.now();
+      var ctrl = window.AbortController ? new AbortController() : null;
+      var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 4000);
+      return fetch(u, { mode: 'no-cors', cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
+        .then(function () { var t = Date.now() - start; clearTimeout(timer); if (ctrl) ctrl.abort(); return { u: u, t: t }; })
+        .catch(function () { clearTimeout(timer); return { u: u, t: Infinity }; });
+    })).then(function (r) {
+      return r.sort(function (a, b) { return a.t - b.t; }).map(function (x) { return x.u; });
+    });
+  }
+
+  function host(u) { return u.split('/')[2]; }
+
+  function setup(id, infoId, urls, label) {
+    var a = document.getElementById(id), info = document.getElementById(infoId);
+    if (!urls || !urls.length) { a.style.display = 'none'; return; }
+    a.href = urls[0];
+    info.textContent = '线路 ' + host(urls[0]);
+    fastest(urls).then(function (ordered) {
+      a.href = ordered[0];
+      info.textContent = '已选最快的线路：' + host(ordered[0]);
+      var box = document.getElementById('lines');
+      var h = document.createElement('p'); h.textContent = label; box.appendChild(h);
+      ordered.forEach(function (u) {
+        var l = document.createElement('a'); l.href = u; l.textContent = host(u) + '：' + u;
+        var p = document.createElement('p'); p.appendChild(l); box.appendChild(p);
+      });
+    });
+  }
+
+  fetch('latest.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) {
+    document.getElementById('ver').textContent = '最新版本 ' + j.version + ' · 手机与电视影视客户端';
+    document.getElementById('notes').textContent = (j.notes || '').replace(/^#+.*\n/gm, '').replace(/\*\*/g, '').trim();
+    setup('phone', 'phoneInfo', j.apk, '手机版');
+    setup('tv', 'tvInfo', j.apkTv, '电视 / 盒子版');
+  }).catch(function () {
+    document.getElementById('ver').textContent = '读取版本信息失败，可以直接下载：';
+    var base = 'https://cdn.jsdelivr.net/gh/xiaotaitech/yingxia-release@dist/';
+    document.getElementById('phone').href = base + 'yingxia.apk';
+    document.getElementById('tv').href = base + 'yingxia-tv.apk';
+    document.getElementById('phoneInfo').textContent = document.getElementById('tvInfo').textContent = '线路 cdn.jsdelivr.net';
+  });
+})();
+</script>
+</body>
+</html>
